@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CartItem } from '../types';
-import { formatPrice } from '../lib/utils';
-import { X } from 'lucide-react';
+import { CartItem } from '../types'; // Ensure CartItem type is correctly imported
+import { formatPrice } from '../lib/utils'; // Ensure formatPrice utility function is correctly imported
+import { X } from 'lucide-react'; // Ensure X icon from lucide-react is correctly imported
 
 interface CartProps {
   isOpen: boolean;
