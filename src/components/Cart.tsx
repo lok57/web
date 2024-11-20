@@ -1,8 +1,6 @@
-// src/components/Cart.tsx
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CartItem } from '../types'; // Ensure CartItem type is correctly imported
+import { CartItem } from '../types';
 import { formatPrice } from '../lib/utils';
 import { X } from 'lucide-react';
 
@@ -60,7 +58,7 @@ export default function Cart({
                       className="flex items-center space-x-4 py-4 border-b"
                     >
                       <img
-                        src={item.image || '/default-image.jpg'} // Fallback if image is not available
+                        src={item.image}
                         alt={item.name}
                         className="h-20 w-20 object-cover rounded"
                       />
