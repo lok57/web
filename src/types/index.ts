@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CartItem } from '../types'; // Ensure CartItem type is correctly imported
-import { formatPrice } from '../lib/utils';
+import { formatPrice } from '../lib/utils'; // Make sure this utility function exists
 
 const products = [
   {
@@ -89,4 +89,32 @@ export default function HomePage() {
                   alt={item.name}
                   className="h-16 w-16 object-cover rounded"
                 />
-    
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold">{item.name}</h3>
+                  <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-lg font-bold">{formatPrice(item.price * item.quantity)}</span>
+                  <button
+                    onClick={() => handleRemoveFromCart(item.id)}
+                    className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+
+      <div className="mt-8">
+        <Link to="/checkout">
+          <button className="w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
+            Proceed to Checkout
+          </button>
+        </Link>
+      </div>
+    </div>
+  );
+}
