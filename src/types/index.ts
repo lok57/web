@@ -1,5 +1,3 @@
-// src/pages/index.tsx
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CartItem } from '../types'; // Ensure CartItem type is correctly imported
@@ -33,7 +31,22 @@ export default function HomePage() {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   const handleAddToCart = (product: CartItem) => {
-    setCart((prevCart) => [...prevCart, { ...product, quantity: 1 }]);
+    setCart((prevCart) => {
+      const existingProductIndex = prevCart.findIndex((item) => item.id === product.id);
+      if (existingProductIndex >= 0) {
+        // Update the existing product's quantity
+        const updatedCart = [...prevCart];
+        updatedCart[existingProductIndex].quantity += 1;
+        return updatedCart;
+      } else {
+        // Add new product to the cart
+        return [...prevCart, { ...product, quantity: 1 }];
+      }
+    });
+  };
+
+  const handleRemoveFromCart = (productId: string) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
   };
 
   return (
@@ -53,7 +66,7 @@ export default function HomePage() {
             <div className="flex justify-between items-center mt-4">
               <span className="text-lg font-bold">{formatPrice(product.price)}</span>
               <button
-                onClick={() => handleAddToCart({ ...product, quantity: 1 })}
+                onClick={() => handleAddToCart(product)}
                 className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
               >
                 Add to Cart
@@ -76,25 +89,4 @@ export default function HomePage() {
                   alt={item.name}
                   className="h-16 w-16 object-cover rounded"
                 />
-                <div className="flex-1">
-                  <h3 className="text-sm font-medium">{item.name}</h3>
-                  <p className="text-sm text-gray-500">{formatPrice(item.price)}</p>
-                  <span className="text-sm text-gray-500">Quantity: {item.quantity}</span>
-                </div>
-                <button className="text-gray-400 hover:text-gray-500">
-                  Remove
-                </button>
-              </div>
-            ))
-          )}
-        </div>
-        <Link
-          to="/checkout"
-          className="mt-4 block w-full bg-green-500 text-white py-3 px-4 rounded-md hover:bg-green-600"
-        >
-          Checkout
-        </Link>
-      </div>
-    </div>
-  );
-}
+    
